@@ -116,6 +116,12 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
   accessToken: API_KEY
 }).addTo(myMap);
 
+var hd = ["species",	"description",	"latitude",	"longitude",	"location",	"sighted_at",	"orca_type"	,"orca_pod"];
+var val = [[],[],[],[],[],[],[],[]]
+var table = d3.select("table");
+var tbody = d3.select("tbody");
+var n = 1
+
 d3.json(buildURL(), function(response){
      console.log(response);
 //     L.geoJson(response, {
@@ -127,20 +133,35 @@ d3.json(buildURL(), function(response){
     var markers = []
     response.forEach(x => {
       L.circle([x.latitude,x.longitude], {
-            stroke: false,
+            stroke: true,
             fillOpacity: 0.8,
-            color:"white",
+            color:"black",
+            weight: .5,
             fillColor: priCol(x.species),
             radius: 1000
 
           }).bindPopup("species = " + x.species + "<br>" +
                       "sighted = " + x.sighted_at + "<br>" +
                       "Pod = " + x.orca_pod + "</br>").addTo(myMap)///end of L Circle
-      
-    
 
+                                                                                        
+           Object.entries(x).forEach(([key, value]) => {
+             for (let y = 0; y < hd.length; y++) {
+                 if (key === hd[y]) {
+                     val[y][n-1] = value;
+                    };
+             };
+         });
+         
+         n += 1
     })///end of data for Each
-
+    console.log(val);
+    for (let z = 0; z < val[0].length; z++) {
+      var tr = tbody.append("tr");
+      for (let a = 0; a < val.length; a++) {
+          tr.append("td").text(val[a][z]);
+      };
+  };
     ///Legend setup  (legend help from https://www.igismap.com/legend-in-leafletjs-map-with-topojson/)
     var legend = L.control({position: 'topleft'});
     legend.onAdd = function (myMap) { 

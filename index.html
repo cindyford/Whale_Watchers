@@ -35,6 +35,76 @@
           <div id="map"></div>
         </div>
       </div>
+      
+      <!-- Start Row for filters -->
+      
+      <div class="row">
+        <div class="col-xs-12 col-md-12 font-custom" >
+              <div class="panel-body">
+                <form id="myform">
+                  <div class="form">
+                    <ul class="list-group" id="filters">
+                      <div class="row text-center">
+                        <div class="col-md-3 border border-primary rounded">
+                            <li class="filter list-group-item font-custom">
+                              <label for="time">Select Species</label>
+                              <select class="form-control font-custom2" id="Species">  <!----Add 'onchange="buildURL()"' to execute function on change----> 
+                                <option><b>All</b></option>
+                              </select>
+                            </li>
+                        </div>
+                        <div class="col-md-2 border border-primary rounded">
+                          <li class="filter list-group-item font-custom">
+                            <label for="time">Select Year</label>
+                            <select class="form-control font-custom2" id="Year">
+                              <option><b>All</b></option>
+                            </select>
+                          </li>
+                        </div>
+                        <div class="col-md-2 border border-primary rounded">
+                          <li class="filter list-group-item font-custom">
+                            <label for="time">Select Month</label>
+                            <select class="form-control font-custom2" id="Month">
+                              <option><b>All</b></option>
+                            </select>
+                          </li>
+                        </div>
+                        <div class="col-md-2 border border-primary rounded">
+                          <li class="filter list-group-item font-custom">
+                            <label for="time">Select Orca Type</label>
+                            <select class="form-control font-custom2" id="Type">
+                              <option><b>All</b></option>
+                            </select>
+                          </li>
+                        </div>
+                        <div class="col-md-2 border border-primary rounded">
+                          <li class="filter list-group-item font-custom">
+                            <label for="time">Select Orca Pod</label>
+                            <select class="form-control font-custom2" id="Pod">
+                              <option><b>All</b></option>
+                            </select>
+                          </li>
+                        </div>
+                      </div>     <!-- form row div -->
+                    </ul>
+                  </div>
+                </form>
+              </div>
+        </div>
+    
+        
+      </div>
+
+
+
+
+
+
+
+
+
+
+
       <div class = "row">
         <div class = "col-md-12">
           <table id="whale-data" class="table table-striped">

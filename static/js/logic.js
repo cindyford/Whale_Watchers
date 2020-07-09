@@ -29,6 +29,8 @@ function dd(cat,arr) {
   });
 }
 
+dd("#Type",Or_Type)
+
 //function to get month digits from text
 function get_Mo(month) {
   switch (true) {
@@ -176,6 +178,7 @@ d3.json(buildURL(), function(response){
     legend.addTo(myMap);
 
 });/// d3.json closing bracket
+
 
 
 ///Whale function curtesy of https://codepen.io/diegoleme/pen/rIokB?editors=0010

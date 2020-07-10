@@ -23,7 +23,7 @@ Auto.prepare(engine, reflect=True)
 print(Auto.classes)
 insp = inspect(engine)
 print(insp.get_table_names())
-print(insp.get_columns('new_table'))
+print(insp.get_columns('ww'))
 
 ta = Auto.classes.new_table
 
@@ -31,7 +31,28 @@ ta = Auto.classes.new_table
 session = Session(engine)
 
 q = session.query(ta).all()
-q_list = []
+
+
+def js(query):
+    q_list = []
+    for x in query:
+        q_list.append({"index":x.index,
+                        "species":x.species,
+                        "quantity":x.quantity,
+                        "description":x.description,
+                        "latitude":x.latitude,
+                        "longitude":x.longitude,
+                        "location":x.location,
+                        "sighted_at":x.sighted_at,
+                        "orca_type":x.orca_type,
+                        "orca_pod":x.orca_pod,
+                        "Date":x.date,
+                        "Month":x.month,
+                        "Time":x.time,
+                        "Hour":x.hour})
+    return q_list
+
+
 # Flask Setup
 app = Flask(__name__)
 
@@ -45,10 +66,12 @@ def welcome():
 
 @app.route("/api/v1.0/json")
 def precipitation():
-    for x in q:
-        q_list.append({"id":x.id,"species":x.species})
+    # for x in q:
+    #     q_list.append({"id":x.id,
+    #                     "species":x.species})
 
-    return jsonify(q_list)
+    # return jsonify(q_list)
+    return jsonify(js(q))
 
 @app.route("/api/v1.0/stations")
 @app.route("/api/v1.0/tobs")

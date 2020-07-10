@@ -1,7 +1,11 @@
 body {
   padding: 0;
   margin: 0;
-
+  background-image: url("../../images/whale_tail.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #cccccc;
 }
 
 #map
@@ -12,8 +16,6 @@ body {
     min-width: 100%;
     display: block;
 }
-
-
 
 .info {
   padding: 6px 8px;
@@ -36,3 +38,25 @@ body {
   margin-right: 8px;
   opacity: 0.9;
   }
+
+  .my-custom-scrollbar {
+    position: relative;
+    height: 600px;
+    overflow: auto;
+    }
+    .table-wrapper-scroll-y {
+    display: block;
+    }
+
+.card-img-top {
+  width: 200px;
+  height: auto;
+}
+
+.jumbotron {
+  background-image: url("../../images/black_orca.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #cccccc;
+}

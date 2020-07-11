@@ -29,7 +29,12 @@ function dd(cat,arr) {
   });
 }
 
-dd("#Type",Or_Type)
+dd("#Type",Or_Type);
+dd("#Species", Sp_List);
+dd("#Year",Year);
+dd("#Month", Mo);
+dd("#Pod",Or_Pod);
+
 
 //function to get month digits from text
 function get_Mo(month) {
@@ -160,8 +165,20 @@ d3.json(url_test, function(response){
          
          n += 1
     })///end of data for Each
+
+
+
     console.log(val);
-    for (let z = 0; z < val[0].length; z++) {
+
+    var tablelength = val[0].length;
+    if (tablelength >1000) {
+      tablelength = 1000
+      };
+    
+    console.log(tablelength);
+      
+
+    for (let z = 0; z < tablelength; z++) {
       var tr = tbody.append("tr");
       for (let a = 0; a < val.length; a++) {
           tr.append("td").text(val[a][z]);

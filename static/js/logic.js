@@ -1,6 +1,7 @@
 var coords = [48.7,-123.04121052819823];
 //var url = "http://hotline.whalemuseum.org/api.json?species=orca&near=48.5159,-123.1524&radius=100&limit=1000"
-var base_url = "http://hotline.whalemuseum.org/api.json?&limit=1000"
+//var base_url = "http://hotline.whalemuseum.org/api.json?&limit=1000"
+var base_url = "http://127.0.0.1:5000/api/v1.0/json"
 var lst_day = 31
 var st_date = "2017-09-01"
 var en_date = "2017-09-30"
@@ -39,6 +40,9 @@ dd("#Pod",Or_Pod);
 //function to get month digits from text
 function get_Mo(month) {
   switch (true) {
+    case month == "0":
+      lst_day = "28"
+      return "0"
     case month == "Jan":
       lst_day = "31"
       return "01"
@@ -97,17 +101,18 @@ function priCol(z) {
 
 function buildURL() {
   
-  var fm_mon_text = "Aug" //d3.select("#month").property("value");
+  var fm_mon_text = d3.select("#month").property("value");
   var mon = get_Mo(fm_mon_text);
-  var fm_year = "2010"   //d3.select("#year").property("value");
-  if (fm_year == "All") {fm_year = ""};
-  var fm_spec = "All" //d3.select("#species").property("value");
-  if (fm_spec == "All") {fm_spec = ""};
-  var fm_type = "southern resident"  //d3.select("#type").property("value");
-  if (fm_type == "All") {fm_type = ""};
-  var fm_pod = "j"   //d3.select("#pod").property("value");
-  if (fm_pod == "All") {fm_pod = ""};
-  return base_url + "&since=" + fm_year +"-" + mon + "-01" + "&until=" + fm_year + "-" + mon + "-" + lst_day + "&species=" + fm_spec + "&orca_type=" + fm_type + "&orca_pod=" + fm_pod;
+  var fm_year = d3.select("#year").property("value");
+  if (fm_year == "All") {fm_year = "0"};
+  var fm_spec = d3.select("#species").property("value");
+  if (fm_spec == "All") {fm_spec = "0"};
+  var fm_type = d3.select("#type").property("value");
+  if (fm_type == "All") {fm_type = "0"};
+  var fm_pod = d3.select("#pod").property("value");
+  if (fm_pod == "All") {fm_pod = "0"};
+  //return base_url + "&since=" + fm_year +"-" + mon + "-01" + "&until=" + fm_year + "-" + mon + "-" + lst_day + "&species=" + fm_spec + "&orca_type=" + fm_type + "&orca_pod=" + fm_pod;
+  return base_url + "/" + fm_year + "/" + mon + "/" + fm_spec + "/" + fm_type + "/" + fm_pod;
 
 };
 
@@ -131,74 +136,79 @@ var n = 1
 
 var url_test = "http://127.0.0.1:5000/api/v1.0/json"
 
-d3.json(url_test, function(response){
-     console.log(response);
-//     L.geoJson(response, {
-//         pointToLayer: function(feature, latlng) {
-//             return L.circlemarker(latlng);
-//         }
+function map() {
+      d3.json(base_url, function(response){
+        console.log(response);
+    //     L.geoJson(response, {
+    //         pointToLayer: function(feature, latlng) {
+    //             return L.circlemarker(latlng);
+    //         }
 
-//     })
-    var markers = []
-    response.forEach(x => {
-      L.circle([x.latitude,x.longitude], {
-            stroke: true,
-            fillOpacity: 0.8,
-            color:"black",
-            weight: .5,
-            fillColor: priCol(x.species),
-            radius: 1000
+    //     })
+      var markers = []
+      response.forEach(x => {
+        L.circle([x.latitude,x.longitude], {
+              stroke: true,
+              fillOpacity: 0.8,
+              color:"black",
+              weight: .5,
+              fillColor: priCol(x.species),
+              radius: 1000
 
-          }).bindPopup("Species = " + x.species + "<br>" +
-                      "Date = " + x.date + "<br>" +
-                      "Time = " + x.time + "<br>" +
-                      "Pod = " + x.orca_pod + "</br>").addTo(myMap)///end of L Circle
+            }).bindPopup("Species = " + x.species + "<br>" +
+                        "Date = " + x.date + "<br>" +
+                        "Time = " + x.time + "<br>" +
+                        "Pod = " + x.orca_pod + "</br>").addTo(myMap)///end of L Circle
 
-           //loading values into array                                                                             
-           Object.entries(x).forEach(([key, value]) => {
-             for (let y = 0; y < hd.length; y++) {
-                 if (key === hd[y]) {
-                     val[y][n-1] = value;
-                    };
-             };
-         });
-         
-         n += 1
-    })///end of data for Each
+              //loading values into array                                                                             
+              Object.entries(x).forEach(([key, value]) => {
+                for (let y = 0; y < hd.length; y++) {
+                    if (key === hd[y]) {
+                        val[y][n-1] = value;
+                      };
+                };
+            });
+            
+            n += 1
+      })///end of data for Each
 
 
 
-    console.log(val);
+      console.log(val);
 
-    var tablelength = val[0].length;
-    if (tablelength >1000) {
-      tablelength = 1000
-      };
-    
-    console.log(tablelength);
-      
-
-    for (let z = 0; z < tablelength; z++) {
-      var tr = tbody.append("tr");
-      for (let a = 0; a < val.length; a++) {
-          tr.append("td").text(val[a][z]);
-      };
-  };
-    ///Legend setup  (legend help from https://www.igismap.com/legend-in-leafletjs-map-with-topojson/)
-    var legend = L.control({position: 'topleft'});
-    legend.onAdd = function (myMap) { 
-    var div = L.DomUtil.create('div', 'info legend'),
-    leg = ["orca","humpback whale","minke whale","gray whale","dall's porpoise","other"];
-
-    for (var i = 0; i < leg.length; i++) {
-      div.innerHTML += '<i style="background:' + priCol(leg[i]) + '"></i> ' + leg[i] + '<br>';
-        }
-        return div;
+      var tablelength = val[0].length;
+      if (tablelength >1000) {
+        tablelength = 1000
         };
-    legend.addTo(myMap);
+      
+      console.log(tablelength);
+        
 
-});/// d3.json closing bracket
+      for (let z = 0; z < tablelength; z++) {
+        var tr = tbody.append("tr");
+        for (let a = 0; a < val.length; a++) {
+            tr.append("td").text(val[a][z]);
+        };
+    };
+      ///Legend setup  (legend help from https://www.igismap.com/legend-in-leafletjs-map-with-topojson/)
+      var legend = L.control({position: 'topleft'});
+      legend.onAdd = function (myMap) { 
+      var div = L.DomUtil.create('div', 'info legend'),
+      leg = ["orca","humpback whale","minke whale","gray whale","dall's porpoise","other"];
 
+      for (var i = 0; i < leg.length; i++) {
+        div.innerHTML += '<i style="background:' + priCol(leg[i]) + '"></i> ' + leg[i] + '<br>';
+          }
+          return div;
+          };
+      legend.addTo(myMap);
+
+  });/// d3.json closing bracket
+
+};
+
+
+map();
 
 
 ///Whale function curtesy of https://codepen.io/diegoleme/pen/rIokB?editors=0010

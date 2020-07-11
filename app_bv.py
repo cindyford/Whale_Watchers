@@ -13,7 +13,7 @@ import datetime as dt
 from datetime import datetime
 from sqlalchemy import inspect
 
-engine = create_engine("sqlite:///ww.sqlite")
+engine = create_engine("sqlite:///whale_watching.sqlite")
 
 # reflect an existing database into a new model
 Auto = automap_base()
@@ -23,22 +23,20 @@ Auto.prepare(engine, reflect=True)
 print(Auto.classes)
 insp = inspect(engine)
 print(insp.get_table_names())
-print(insp.get_columns('ww'))
+print(insp.get_columns('whale_table'))
 
-ta = Auto.classes.new_table
+ta = Auto.classes.whale_table
 
 # Create our session (link) from Python to the DB
 session = Session(engine)
 
 q = session.query(ta).all()
 
-
 def js(query):
     q_list = []
     for x in query:
-        q_list.append({"index":x.index,
+        q_list.append({"id":x.id,
                         "species":x.species,
-                        "quantity":x.quantity,
                         "description":x.description,
                         "latitude":x.latitude,
                         "longitude":x.longitude,
@@ -46,10 +44,12 @@ def js(query):
                         "sighted_at":x.sighted_at,
                         "orca_type":x.orca_type,
                         "orca_pod":x.orca_pod,
-                        "Date":x.date,
-                        "Month":x.month,
-                        "Time":x.time,
-                        "Hour":x.hour})
+                        "date":x.date,
+                        "time":x.time,
+                        "month":x.month,
+                        "year":x.year,
+                        "hour":x.hour,
+                        "year_month":x.year_month})
     return q_list
 
 

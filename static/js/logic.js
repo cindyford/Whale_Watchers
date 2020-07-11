@@ -40,10 +40,6 @@ anime.timeline({loop: true})
   });
 
 
-
-
-
-
 var coords = [48.7,-123.04121052819823];
 //var url = "http://hotline.whalemuseum.org/api.json?species=orca&near=48.5159,-123.1524&radius=100&limit=1000"
 //var base_url = "http://hotline.whalemuseum.org/api.json?&limit=1000"

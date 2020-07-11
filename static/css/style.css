@@ -147,6 +147,8 @@ li {
 html, body { height: 100%; width: 100%; margin: 0;}
 #whale {height: 99.5%; width: 100%;}
 
+
+/* Header bar animations */
 .ml5 {
   position: relative;
   font-weight: 300;
@@ -167,7 +169,7 @@ html, body { height: 100%; width: 100%; margin: 0;}
   position: absolute;
   left: 0;
   top: 10;
-  bottom: 10;
+  bottom: 8;
   margin: auto;
   height: 3px;
   width: 100%;

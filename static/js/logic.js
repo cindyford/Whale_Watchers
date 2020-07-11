@@ -1,3 +1,5 @@
+
+// code to animate the title section
 anime.timeline({loop: true})
   .add({
     targets: '.ml5 .line',

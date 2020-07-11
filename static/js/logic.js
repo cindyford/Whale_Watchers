@@ -30,17 +30,17 @@ function dd(cat,arr) {
   });
 }
 
-dd("#Type",Or_Type);
-dd("#Species", Sp_List);
-dd("#Year",Year);
-dd("#Month", Mo);
-dd("#Pod",Or_Pod);
+dd("#type",Or_Type);
+dd("#species", Sp_List);
+dd("#year",Year);
+dd("#month", Mo);
+dd("#pod",Or_Pod);
 
 
 //function to get month digits from text
 function get_Mo(month) {
   switch (true) {
-    case month == "0":
+    case month == "All":
       lst_day = "28"
       return "0"
     case month == "Jan":
@@ -98,7 +98,7 @@ function priCol(z) {
         return "rgb(255,153,153)" //pink is all others
   };////end of switch for mag 
 }
-
+var final_url
 function buildURL() {
   
   var fm_mon_text = d3.select("#month").property("value");
@@ -112,6 +112,9 @@ function buildURL() {
   var fm_pod = d3.select("#pod").property("value");
   if (fm_pod == "All") {fm_pod = "0"};
   //return base_url + "&since=" + fm_year +"-" + mon + "-01" + "&until=" + fm_year + "-" + mon + "-" + lst_day + "&species=" + fm_spec + "&orca_type=" + fm_type + "&orca_pod=" + fm_pod;
+  final_url = base_url + "/" + fm_year + "/" + mon + "/" + fm_spec + "/" + fm_type + "/" + fm_pod
+  console.log(final_url)
+  map()
   return base_url + "/" + fm_year + "/" + mon + "/" + fm_spec + "/" + fm_type + "/" + fm_pod;
 
 };
@@ -136,8 +139,9 @@ var n = 1
 
 var url_test = "http://127.0.0.1:5000/api/v1.0/json"
 
+
 function map() {
-      d3.json(base_url, function(response){
+      d3.json(final_url, function(response){
         console.log(response);
     //     L.geoJson(response, {
     //         pointToLayer: function(feature, latlng) {
@@ -207,9 +211,7 @@ function map() {
 
 };
 
-
-map();
-
+buildURL()
 
 ///Whale function curtesy of https://codepen.io/diegoleme/pen/rIokB?editors=0010
 

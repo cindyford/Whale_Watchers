@@ -146,7 +146,7 @@ def year(yr,mo,spec,type,pod):
         exit = session.query(ta).filter(ta.year==yr).all()
 
     else:
-        exit = session.query(ta).filter(ta.year==yr).all()
+        exit = session.query(ta).all()
         
 
     return jsonify(js(exit))

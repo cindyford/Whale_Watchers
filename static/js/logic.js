@@ -111,6 +111,7 @@ function buildURL() {
   if (fm_type == "All") {fm_type = "0"};
   var fm_pod = d3.select("#pod").property("value");
   if (fm_pod == "All") {fm_pod = "0"};
+  val = [[],[],[],[],[],[],[],[]]
   //return base_url + "&since=" + fm_year +"-" + mon + "-01" + "&until=" + fm_year + "-" + mon + "-" + lst_day + "&species=" + fm_spec + "&orca_type=" + fm_type + "&orca_pod=" + fm_pod;
   final_url = base_url + "/" + fm_year + "/" + mon + "/" + fm_spec + "/" + fm_type + "/" + fm_pod
   console.log(final_url)

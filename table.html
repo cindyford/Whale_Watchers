@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Whale Watchers</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
+
+  <!-- Our CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/superhero/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<header class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <p class="navbar-brand">Whale Watchers</p>
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button> -->
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="whale.html">Whale Fun <span class="sr-only">(current)</span></a>
+            </li>
+            <!--<li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>-->
+            
+          </ul>
+          
+        </div>
+      </nav>
+</header>
+<body>
+  
+    <div class="container fill">
+          
+      <!-- Start Row for filters -->
+      
+      <div class="row">
+        <div class="col-xs-12 col-md-12 font-custom" >
+              <div class="panel-body">
+                <form id="myform">
+                  <div class="form">
+                    <ul class="list-group" id="filters">
+                      <div class="row text-center">
+                        <div class="col-md-3 border border-primary rounded">
+                            <li class="filter list-group-item font-custom">
+                              <label for="time">Select Species</label>
+                              <select class="form-control font-custom2" id="Species">  <!----Add 'onchange="buildURL()"' to execute function on change----> 
+                                <option><b>All</b></option>
+                              </select>
+                            </li>
+                        </div>
+                        <div class="col-md-2 border border-primary rounded">
+                          <li class="filter list-group-item font-custom">
+                            <label for="time">Select Year</label>
+                            <select class="form-control font-custom2" id="Year">
+                              <option><b>All</b></option>
+                            </select>
+                          </li>
+                        </div>
+                        <div class="col-md-2 border border-primary rounded">
+                          <li class="filter list-group-item font-custom">
+                            <label for="time">Select Month</label>
+                            <select class="form-control font-custom2" id="Month">
+                              <option><b>All</b></option>
+                            </select>
+                          </li>
+                        </div>
+                        <div class="col-md-2 border border-primary rounded">
+                          <li class="filter list-group-item font-custom">
+                            <label for="time">Select Orca Type</label>
+                            <select class="form-control font-custom2" id="Type">
+                              <option><b>All</b></option>
+                            </select>
+                          </li>
+                        </div>
+                        <div class="col-md-2 border border-primary rounded">
+                          <li class="filter list-group-item font-custom">
+                            <label for="time">Select Orca Pod</label>
+                            <select class="form-control font-custom2" id="Pod">
+                              <option><b>All</b></option>
+                            </select>
+                          </li>
+                        </div>
+                      </div>     <!-- form row div -->
+                    </ul>
+                  </div>
+                </form>
+              </div>
+        </div>
+    
+        
+      </div>
+
+      <div class = "row table-row">
+        <div class = "table-wrapper-scroll-y my-custom-scrollbar col-md-12">
+          <table id="whale-data" class="table table-primary table-striped">
+            <thead>
+              <tr>
+                
+                <th class="table-head">Species</th>
+                <th class="table-head">Description</th>
+                <th class="table-head">Latitude</th>
+                <th class="table-head">Longitude</th>
+                <th class="table-head">Location</th>
+                <th class="table-head">Sighted at</th>
+                <th class="table-head">Orca Type</th>
+                <th class="table-head">Orca Pod</th>
+                
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+</body>

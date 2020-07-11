@@ -15,7 +15,7 @@ var Sp_List = ["orca", "minke", "gray whale", "humpback", "atlantic white-sided 
 
 var Or_Type = ["southern resident","northern resident","transient", "offshore"]
 
-var Or_Pod = ["j","k","l"]
+var Or_Pod = ["j","k" , "l"]
 
 var Mo = ["Jan","Feb","Jan","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
@@ -129,7 +129,7 @@ var table = d3.select("table");
 var tbody = d3.select("tbody");
 var n = 1
 
-var url_test = "http://127.0.0.1:5000/api/v1.0/json/0/05"
+var url_test = "http://127.0.0.1:5000/api/v1.0/json"
 
 d3.json(url_test, function(response){
      console.log(response);

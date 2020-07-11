@@ -73,66 +73,69 @@ def precipitation():
     # return jsonify(q_list)
     return jsonify(js(q))
 
+
+
+
 @app.route("/api/v1.0/json/<yr>/<mo>/<spec>/<type>/<pod>")
 def year(yr,mo,spec,type,pod):
     session = Session(engine)
     # All items in query (no all's)
     if (yr != '0' and mo != '0' and spec != '0' and type != '0' and pod != '0'):
-        exit = session.query(ta).filter(ta.year==yr).filter(ta.month==mo).filter(ta.species==spec).filter(ta.orca_type==type).filter(ta.orca_pod==pod).all()
+        exit = session.query(ta).filter(ta.year==yr).filter(ta.month==mo).filter(ta.species==spec).filter(ta.orca_type==type).filter(ta.orca_pod.like('%'+pod+'%')).all()
     # elif if only one item was all
     elif (yr != '0' and mo != '0' and spec != '0' and type != '0'):
         exit = session.query(ta).filter(ta.year==yr).filter(ta.month==mo).filter(ta.species==spec).filter(ta.orca_type==type).all()
     elif (yr != '0' and mo != '0' and spec != '0' and pod != '0'):
-        exit = session.query(ta).filter(ta.year==yr).filter(ta.month==mo).filter(ta.species==spec).filter(ta.orca_pod==pod).all()
+        exit = session.query(ta).filter(ta.year==yr).filter(ta.month==mo).filter(ta.species==spec).filter(ta.orca_pod.like('%'+pod+'%')).all()
     elif (yr != '0' and mo != '0' and type != '0' and pod != '0'):
-        exit = session.query(ta).filter(ta.year==yr).filter(ta.month==mo).filter(ta.orca_type==type).filter(ta.orca_pod==pod).all()
+        exit = session.query(ta).filter(ta.year==yr).filter(ta.month==mo).filter(ta.orca_type==type).filter(ta.orca_pod.like('%'+pod+'%')).all()
     elif (yr != '0' and spec != '0' and type != '0' and pod != '0'):
-        exit = session.query(ta).filter(ta.year==yr).filter(ta.species==spec).filter(ta.orca_type==type).filter(ta.orca_pod==pod).all()
+        exit = session.query(ta).filter(ta.year==yr).filter(ta.species==spec).filter(ta.orca_type==type).filter(ta.orca_pod.like('%'+pod+'%')).all()
     elif (mo != '0' and spec != '0' and type != '0' and pod != '0'):
-        exit = session.query(ta).filter(ta.month==mo).filter(ta.species==spec).filter(ta.orca_type==type).filter(ta.orca_pod==pod).all()
+        exit = session.query(ta).filter(ta.month==mo).filter(ta.species==spec).filter(ta.orca_type==type).filter(ta.orca_pod.like('%'+pod+'%')).all()
     # elif if only two item's was all
     elif (spec != '0' and type != '0' and pod != '0'): #yr,mo all
-        exit = session.query(ta).filter(ta.species==spec).filter(ta.orca_type==type).filter(ta.orca_pod==pod).all()
+        exit = session.query(ta).filter(ta.species==spec).filter(ta.orca_type==type).filter(ta.orca_pod.like('%'+pod+'%')).all()
     elif (mo != '0' and type != '0' and pod != '0'): #yr, spec all
-        exit = session.query(ta).filter(ta.month==mo).filter(ta.orca_type==type).filter(ta.orca_pod==pod).all()
+        exit = session.query(ta).filter(ta.month==mo).filter(ta.orca_type==type).filter(ta.orca_pod.like('%'+pod+'%')).all()
     elif (mo != '0' and spec != '0' and pod != '0'): #yr, type all
-        exit = session.query(ta).filter(ta.month==mo).filter(ta.species==spec).filter(ta.orca_pod==pod).all()
+        exit = session.query(ta).filter(ta.month==mo).filter(ta.species==spec).filter(ta.orca_pod.like('%'+pod+'%')).all()
     elif (mo != '0' and spec != '0' and type != '0'): #yr, pod all
-        exit = session.query(ta).filter(ta.year==yr).filter(ta.month==mo).filter(ta.species==spec).filter(ta.orca_type==type).filter(ta.orca_pod==pod).all()    
+        exit = session.query(ta).filter(ta.year==yr).filter(ta.month==mo).filter(ta.species==spec).filter(ta.orca_type==type).filter(ta.orca_pod.like('%'+pod+'%')).all()    
     elif (yr != '0' and type != '0' and pod != '0'): #mo, spec all
-        exit = session.query(ta).filter(ta.year==yr).filter(ta.orca_type==type).filter(ta.orca_pod==pod).all()
+        exit = session.query(ta).filter(ta.year==yr).filter(ta.orca_type==type).filter(ta.orca_pod.like('%'+pod+'%')).all()
     elif (yr != '0' and spec != '0' and pod != '0'): #mo, type all
-        exit = session.query(ta).filter(ta.year==yr).filter(ta.species==spec).filter(ta.orca_pod==pod).all()
+        exit = session.query(ta).filter(ta.year==yr).filter(ta.species==spec).filter(ta.orca_pod.like('%'+pod+'%')).all()
     elif (yr != '0' and spec != '0' and type != '0'): #mo, pod all
         exit = session.query(ta).filter(ta.year==yr).filter(ta.species==spec).filter(ta.orca_type==type).all()
     elif (yr != '0' and mo != '0' and pod != '0'): #spec, type all
-        exit = session.query(ta).filter(ta.year==yr).filter(ta.month==mo).filter(ta.orca_pod==pod).all()
+        exit = session.query(ta).filter(ta.year==yr).filter(ta.month==mo).filter(ta.orca_pod.like('%'+pod+'%')).all()
     elif (yr != '0' and mo != '0' and type != '0'): #spec, pod all
         exit = session.query(ta).filter(ta.year==yr).filter(ta.month==mo).filter(ta.orca_type==type).all()
     elif (yr != '0' and mo != '0' and spec != '0'): #type, pod all
         exit = session.query(ta).filter(ta.year==yr).filter(ta.month==mo).filter(ta.species==spec).all()
     # elif if only three item's was all
     elif (type != '0' and pod != '0'): #yr, mo, spec all
-        exit = session.query(ta).filter(ta.orca_type==type).filter(ta.orca_pod==pod).all()
+        exit = session.query(ta).filter(ta.orca_type==type).filter(ta.orca_pod.like('%'+pod+'%')).all()
     elif (spec != '0' and pod != '0'): #yr, mo, type
-        exit = session.query(ta).filter(ta.species==spec).filter(ta.orca_pod==pod).all()
+        exit = session.query(ta).filter(ta.species==spec).filter(ta.orca_pod.like('%'+pod+'%')).all()
     elif (spec != '0' and type != '0'): #yr, mo, pod
         exit = session.query(ta).filter(ta.species==spec).filter(ta.orca_type==type).all()
     elif (mo != '0' and pod != '0'): #yr, spec, tyype all
-        exit = session.query(ta).filter(ta.month==mo).filter(ta.orca_pod==pod).all()
+        exit = session.query(ta).filter(ta.month==mo).filter(ta.orca_pod.like('%'+pod+'%')).all()
     elif (mo != '0' and type != '0'): #yr, spec, pod all
         exit = session.query(ta).filter(ta.month==mo).filter(ta.orca_type==type).all()
     elif (mo != '0' and spec != '0'): #yr, type, pod all
         exit = session.query(ta).filter(ta.month==mo).filter(ta.species==spec).all()
     elif (yr != '0' and pod != '0'): #mo, spec, type all
-        exit = session.query(ta).filter(ta.year==yr).filter(ta.orca_pod==pod).all()
+        exit = session.query(ta).filter(ta.year==yr).filter(ta.orca_pod.like('%'+pod+'%')).all()
     elif (yr != '0' and spec != '0'): #mo, type, pod all
         exit = session.query(ta).filter(ta.year==yr).filter(ta.species==spec).all()
     elif (yr != '0' and mo != '0'): #spec,type,pod all
         exit = session.query(ta).filter(ta.year==yr).filter(ta.month==mo).all()                     
 # elif if only four item's was all
     elif (pod != '0'):
-        exit = session.query(ta).filter(ta.orca_pod==pod).all()       
+        exit = session.query(ta).filter(ta.orca_pod.like('%'+pod+'%')).all()       
     elif (type != '0'):
         exit = session.query(ta).filter(ta.orca_type==type).all()
     elif (spec != '0'):

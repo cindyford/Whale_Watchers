@@ -28,20 +28,22 @@ body {
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
   border-radius: 5px;
   }
+
   .legend {
   background-color: “black”;
   line-height: 25px;
   color: #555;
   width: auto;
+  font-size: 15px;
   }
+
   .legend i {
   width: 18px;
   height: 18px;
   float: left;
   margin-right: 8px;
   opacity: 0.9;
-  font-size: 20px;
-  }
+}
 
   .table-row {
     margin-bottom: 40px;
@@ -144,3 +146,45 @@ li {
 
 html, body { height: 100%; width: 100%; margin: 0;}
 #whale {height: 99.5%; width: 100%;}
+
+.ml5 {
+  position: relative;
+  font-weight: 300;
+  font-size: 4.5em;
+  color: #402d2d;
+}
+
+.ml5 .text-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-top: 0.1em;
+  padding-right: 0.05em;
+  padding-bottom: 0.15em;
+  line-height: 1em;
+}
+
+.ml5 .line {
+  position: absolute;
+  left: 0;
+  top: 10;
+  bottom: 10;
+  margin: auto;
+  height: 3px;
+  width: 100%;
+  background-color: rgb(1, 65, 65);
+  transform-origin: 0.5 0;
+}
+
+.ml5 .ampersand {
+  font-family: Baskerville, serif;
+  font-style: italic;
+  font-weight: 400;
+  width: 1em;
+  margin-right: -0.1em;
+  margin-left: -0.1em;
+}
+
+.ml5 .letters {
+  display: inline-block;
+  opacity: 0;
+}

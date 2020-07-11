@@ -73,7 +73,23 @@ def precipitation():
     # return jsonify(q_list)
     return jsonify(js(q))
 
-@app.route("/api/v1.0/stations")
+@app.route("/api/v1.0/json/<yr>/<mo>")
+def year(yr,mo):
+    session = Session(engine)
+    if (yr != '0' and mo != '0'):
+        exit = session.query(ta).filter(ta.year==yr).filter(ta.month==mo).all()
+    elif (mo != '0'):
+        exit = session.query(ta).filter(ta.month==mo).all()
+    else:
+        exit = session.query(ta).filter(ta.year==yr).all()
+        
+
+
+
+    return jsonify(js(exit))
+
+
+
 @app.route("/api/v1.0/tobs")
 @app.route("/api/v1.0/<st_dt>")
 @app.route("/api/v1.0/<st_dt>/<en_dt>")

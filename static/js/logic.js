@@ -124,7 +124,9 @@ var table = d3.select("table");
 var tbody = d3.select("tbody");
 var n = 1
 
-d3.json(buildURL(), function(response){
+var url_test = "http://127.0.0.1:5000/api/v1.0/json"
+
+d3.json(url_test, function(response){
      console.log(response);
 //     L.geoJson(response, {
 //         pointToLayer: function(feature, latlng) {
@@ -142,8 +144,9 @@ d3.json(buildURL(), function(response){
             fillColor: priCol(x.species),
             radius: 1000
 
-          }).bindPopup("species = " + x.species + "<br>" +
-                      "sighted = " + x.sighted_at + "<br>" +
+          }).bindPopup("Species = " + x.species + "<br>" +
+                      "Date = " + x.date + "<br>" +
+                      "Time = " + x.time + "<br>" +
                       "Pod = " + x.orca_pod + "</br>").addTo(myMap)///end of L Circle
 
                                                                                         

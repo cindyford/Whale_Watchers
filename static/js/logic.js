@@ -124,7 +124,7 @@ var table = d3.select("table");
 var tbody = d3.select("tbody");
 var n = 1
 
-var url_test = "http://127.0.0.1:5000/api/v1.0/json"
+var url_test = "http://127.0.0.1:5000/api/v1.0/json/0/05"
 
 d3.json(url_test, function(response){
      console.log(response);
@@ -149,7 +149,7 @@ d3.json(url_test, function(response){
                       "Time = " + x.time + "<br>" +
                       "Pod = " + x.orca_pod + "</br>").addTo(myMap)///end of L Circle
 
-                                                                                        
+           //loading values into array                                                                             
            Object.entries(x).forEach(([key, value]) => {
              for (let y = 0; y < hd.length; y++) {
                  if (key === hd[y]) {
@@ -161,6 +161,10 @@ d3.json(url_test, function(response){
          n += 1
     })///end of data for Each
     console.log(val);
+
+
+
+    ////loading array
     for (let z = 0; z < val[0].length; z++) {
       var tr = tbody.append("tr");
       for (let a = 0; a < val.length; a++) {

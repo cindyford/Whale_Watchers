@@ -141,8 +141,10 @@ function priCol(z) {
   switch (true) {
     case z == "orca":
         return "rgb(84,150,53)" ///green is orca
-    case z == "humpback whale":
+    case z == "humpback":
         return "rgb(255,0,0)" ///red is humpback
+    case z == "humpback whale":
+        return "rgb(255,0,0)" ///red is humpback    
     case z == "minke whale":
         return "rgb(204,51,153)"  ///violot or something is minke  
     case z == "gray whale":
@@ -300,7 +302,7 @@ function map() {
       var legend = L.control({position: 'topleft'});
       legend.onAdd = function (myMap) { 
       var div = L.DomUtil.create('div', 'info legend'),
-      leg = ["orca","humpback whale","minke whale","gray whale","dall's porpoise","other"];
+      leg = ["orca","humpback","minke whale","gray whale","dall's porpoise","other"];
 
       for (var i = 0; i < leg.length; i++) {
         div.innerHTML += '<i style="background:' + priCol(leg[i]) + '"></i> ' + leg[i] + '<br>';

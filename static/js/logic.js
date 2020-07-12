@@ -272,14 +272,32 @@ function map() {
         maxZoom: 18,
         id: "mapbox/streets-v11",
         accessToken: API_KEY
-      });      
+      }); 
 
+      var dark = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/{z}/{x}/{y}?access_token={accessToken}", {
+        attribution: "Map data &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"http://mapbox.com\">Mapbox</a>",
+        maxZoom: 10,
+        id: "mapbox.dark",
+        accessToken: API_KEY
+      });  
+      
+      var basemaps = {
+        "Street Map": base, 
+        "Dark Map": dark
+      };
+
+      var overlayMaps = {
+        Sightings: sigMon
+      };
 
       myMap = L.map("map", {
           center: coords, 
           zoom: 9.3,
-          layers: [base, sigMon]
+          layers: [dark, sigMon]
       });
+
+      L.control.layers(basemaps, overlayMaps, {
+        collapsed: false}).addTo(myMap);
       
       console.log(val);
 

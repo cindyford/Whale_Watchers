@@ -53,16 +53,27 @@ var species = "orca"
 var orca_type = "northern resident"
 var orca_pod = "l"
 var url_built = base_url + "&since=" + st_date + "&until=" + en_date //+ "&species=" + species + "&orca_pod=" + orca_type + "&orca_pod" + orca_pod
+var mkGrp = []   //marker group
+var myMap = null
 
-var Sp_List = ["orca", "minke", "gray whale", "humpback", "atlantic white-sided dolphin", "pacific white-sided dolphin", 
-  "dalls porpoise", "harbor porpoise", "harbor seal", "northern elephant seal", 
-  "southern elephant seal", "california sea Lion", "steller sea lion", "sea otter", "other", "unknown"]
+//variables for avg lat and lon
+var lat = []  
+var lon = []  
+var lat_avg = 0.0
+var lat_sum = 0
+var lon_avg = 0.0
+var lon_sum = 0.0
 
+
+var Sp_List = ["orca", "minke whale", "gray whale", "humpback", "atlantic white-sided dolphin", "pacific white-sided dolphin", 
+  "dall's porpoise", "harbor porpoise", "harbor seal", "northern elephant seal", 
+  "steller sea lion", "sea otter"]
+////deleted "southern elephant seal", "california sea Lion", "other", , "unknown"
 var Or_Type = ["southern resident","northern resident","transient", "offshore"]
 
 var Or_Pod = ["j","k" , "l"]
 
-var Mo = ["Jan","Feb","Jan","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+var Mo = ["All","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
 var Year = ["2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017"]
 
@@ -155,7 +166,7 @@ function buildURL() {
   if (fm_type == "All") {fm_type = "0"};
   var fm_pod = d3.select("#pod").property("value");
   if (fm_pod == "All") {fm_pod = "0"};
-  val = [[],[],[],[],[],[],[],[]]
+  //val = [[],[],[],[],[],[],[],[]]
   //return base_url + "&since=" + fm_year +"-" + mon + "-01" + "&until=" + fm_year + "-" + mon + "-" + lst_day + "&species=" + fm_spec + "&orca_type=" + fm_type + "&orca_pod=" + fm_pod;
   final_url = base_url + "/" + fm_year + "/" + mon + "/" + fm_spec + "/" + fm_type + "/" + fm_pod
   console.log(final_url)
@@ -164,17 +175,17 @@ function buildURL() {
 
 };
 
-var myMap = L.map("map", {
-    center: coords, 
-    zoom: 9.3
-});
+// var myMap = L.map("map", {
+//     center: coords, 
+//     zoom: 9.3
+// });
 
-L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-  attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-  maxZoom: 18,
-  id: "mapbox/streets-v11",
-  accessToken: API_KEY
-}).addTo(myMap);
+// L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+//   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+//   maxZoom: 18,
+//   id: "mapbox/streets-v11",
+//   accessToken: API_KEY
+// }).addTo(myMap);
 
 var hd = ["species",	"description",	"latitude",	"longitude",	"location",	"sighted_at",	"orca_type"	,"orca_pod"];
 var val = [[],[],[],[],[],[],[],[]]
@@ -186,6 +197,14 @@ var url_test = "http://127.0.0.1:5000/api/v1.0/json"
 
 
 function map() {
+  //reset values map routine
+  val = [[],[],[],[],[],[],[],[]];
+  lat_sum = 0
+  lon_sum = 0
+  lat = []
+  lon = []
+  var n=1;
+  mkGrp = []   ///reset marker group
       d3.json(final_url, function(response){
         console.log(response);
     //     L.geoJson(response, {
@@ -196,7 +215,12 @@ function map() {
     //     })
       var markers = []
       response.forEach(x => {
-        L.circle([x.latitude,x.longitude], {
+        lat.push(parseFloat(x.latitude));
+        lat_sum += x.latitude;
+        lon_sum += x.longitude;
+        lon.push(parseFloat(x.longitude));
+        ///start marker group for circles
+        mkGrp.push(L.circle([x.latitude,x.longitude], {
               stroke: true,
               fillOpacity: 0.8,
               color:"black",
@@ -207,8 +231,8 @@ function map() {
             }).bindPopup("Species = " + x.species + "<br>" +
                         "Date = " + x.date + "<br>" +
                         "Time = " + x.time + "<br>" +
-                        "Pod = " + x.orca_pod + "</br>").addTo(myMap)///end of L Circle
-
+                        "Pod = " + x.orca_pod + "</br>")///end of L Circle
+        ); ////end of marker group
               //loading values into array                                                                             
               Object.entries(x).forEach(([key, value]) => {
                 for (let y = 0; y < hd.length; y++) {
@@ -220,9 +244,41 @@ function map() {
             
             n += 1
       })///end of data for Each
+      
+      ///calculate average lat and lon for calcuations
+      lat_avg = lat_sum/lat.length
+      lon_avg = lon_sum/lon.length
+      ///set coords to center the map      
+      coords = [lat_avg,lon_avg]
+      ///considerting using latitude range to scale map, but not proven
+      var lat_range = Math.max(...lat) - Math.min(...lat)
+
+      ///create layer group
+      var sigMon = L.layerGroup(mkGrp)
+
+      //remove map layer if present
+      try {
+        myMap.off();
+        myMap.remove();
 
 
+      } catch (error) {console.log("First Map Load")}  ///Printer for first map load
 
+      ///create base layer
+      var base = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+        attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+        maxZoom: 18,
+        id: "mapbox/streets-v11",
+        accessToken: API_KEY
+      });      
+
+
+      myMap = L.map("map", {
+          center: coords, 
+          zoom: 9.3,
+          layers: [base, sigMon]
+      });
+      
       console.log(val);
 
       var tablelength = val[0].length;
@@ -231,7 +287,8 @@ function map() {
         };
       
       console.log(tablelength);
-        
+    //select table body and clear the table
+    d3.select("tbody").html("");
 
       for (let z = 0; z < tablelength; z++) {
         var tr = tbody.append("tr");

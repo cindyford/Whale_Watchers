@@ -1,11 +1,14 @@
-body {
+html, body {
   padding: 0;
   margin: 0;
-  background-image: url("../../images/whale_tail.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
+  background: url("../../images/whale_tail.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
   background-color: #cccccc;
+  height: 100%; 
+  width: 100%;
 }
 
 
@@ -145,11 +148,6 @@ li {
 
 
 /* ..............Whale Decorations................ */
-
-html, body { 
-  height: 100%; 
-  width: 100%;
-}
 
 #whale {
   height: 99.5%; 

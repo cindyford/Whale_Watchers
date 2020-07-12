@@ -43,6 +43,7 @@ body {
   float: left;
   margin-right: 8px;
   opacity: 0.9;
+  font-size: 20px;
 }
 
   .table-row {
@@ -142,13 +143,34 @@ li {
   list-style-type: none;
 }
 
+
 /* ..............Whale Decorations................ */
 
-html, body { height: 100%; width: 100%; margin: 0;}
-#whale {height: 99.5%; width: 100%;}
+html, body { 
+  height: 100%; 
+  width: 100%;
+}
+
+#whale {
+  height: 99.5%; 
+  width: 100%;
+}
 
 
-/* Header bar animations */
+/* ..............Graph Decorations................ */
+
+.image-container {
+  text-align: center;
+}
+
+img {
+  width: 500px;
+  height: auto;
+  background-color: white; 
+}
+
+
+/* .............Header bar animations............. */
 .ml5 {
   position: relative;
   font-weight: 300;

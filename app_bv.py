@@ -59,22 +59,12 @@ app = Flask(__name__)
 #Define Base Route
 @app.route("/")
 def welcome():
-    return (
-        f"Whale Watchers<br/>"
-
-    )
+    return (f"Whale Watchers<br/>")
 
 @app.route("/api/v1.0/json")
 def precipitation():
-    # for x in q:
-    #     q_list.append({"id":x.id,
-    #                     "species":x.species})
 
-    # return jsonify(q_list)
     return jsonify(js(q))
-
-
-
 
 @app.route("/api/v1.0/json/<yr>/<mo>/<spec>/<type>/<pod>")
 def year(yr,mo,spec,type,pod):
@@ -151,13 +141,6 @@ def year(yr,mo,spec,type,pod):
 
     return jsonify(js(exit))
 
-
-
-@app.route("/api/v1.0/tobs")
-@app.route("/api/v1.0/<st_dt>")
-@app.route("/api/v1.0/<st_dt>/<en_dt>")
-def test():
-    return "test"
         
 if __name__ == "__main__":
     app.run(debug=True)

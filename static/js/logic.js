@@ -293,7 +293,7 @@ function map() {
       myMap = L.map("map", {
           center: coords, 
           zoom: 9.3,
-          layers: [dark, sigMon]
+          layers: [base, sigMon]
       });
 
       L.control.layers(basemaps, overlayMaps, {

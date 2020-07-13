@@ -13,10 +13,6 @@ import datetime as dt
 from datetime import datetime
 from sqlalchemy import inspect
 
-
-
-
-
 engine = create_engine("sqlite:///whale_watching.sqlite")
 
 # reflect an existing database into a new model
@@ -166,5 +162,3 @@ def test():
 if __name__ == "__main__":
     app.run(debug=True)
 
-def getApp():
-    return app

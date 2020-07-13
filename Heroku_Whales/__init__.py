@@ -13,6 +13,11 @@ import datetime as dt
 from datetime import datetime
 from sqlalchemy import inspect
 
+def getApp():
+    return app
+
+
+
 engine = create_engine("sqlite:///whale_watching.sqlite")
 
 # reflect an existing database into a new model

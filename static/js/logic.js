@@ -69,7 +69,7 @@ var Sp_List = ["orca", "minke whale", "gray whale", "humpback", "atlantic white-
   "dall's porpoise", "harbor porpoise", "harbor seal", "northern elephant seal", 
   "steller sea lion", "sea otter"]
 ////deleted "southern elephant seal", "california sea Lion", "other", , "unknown"
-var Or_Type = ["southern resident","northern resident","transient", "offshore"]
+var Or_Type = ["southern resident","transient", "offshore","unknown"]
 
 var Or_Pod = ["j","k" , "l"]
 

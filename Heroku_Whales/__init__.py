@@ -13,8 +13,7 @@ import datetime as dt
 from datetime import datetime
 from sqlalchemy import inspect
 
-def getApp():
-    return app
+
 
 
 
@@ -167,3 +166,5 @@ def test():
 if __name__ == "__main__":
     app.run(debug=True)
 
+def getApp():
+    return app
